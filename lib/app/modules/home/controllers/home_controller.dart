@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
@@ -8,12 +9,11 @@ import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 class HomeController extends GetxController {
-  Future<File> loadNetwork(String url) async {
-    Uri uri = Uri.parse(url);
-    final response = await http.get(uri);
-    final bytes = response.bodyBytes;
+  Future<File> loadAsset(String path) async {
+    final data = await rootBundle.load(path);
+    final bytes = data.buffer.asUint8List();
 
-    return _storeFile(url, bytes);
+    return _storeFile(path, bytes);
   }
 
   Future<File?> pickFile() async {
@@ -24,6 +24,14 @@ class HomeController extends GetxController {
 
     if (result == null) return null;
     return File(result.paths.first!);
+  }
+
+  Future<File> loadNetwork(String url) async {
+    Uri uri = Uri.parse(url);
+    final response = await http.get(uri);
+    final bytes = response.bodyBytes;
+
+    return _storeFile(url, bytes);
   }
 
   Future<File> _storeFile(String url, List<int> bytes) async {

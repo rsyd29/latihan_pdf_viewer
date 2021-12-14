@@ -20,7 +20,11 @@ class HomeView extends GetView<HomeController> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () async {
+                final path = 'assets/PEMBUATAN FILE PDF_FNH_tamim.pdf';
+                final file = await controller.loadAsset(path);
+                openPDF(context, file);
+              },
               child: Text('Asset PDF'),
             ),
             ElevatedButton(
