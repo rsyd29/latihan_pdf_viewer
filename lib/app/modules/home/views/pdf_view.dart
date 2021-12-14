@@ -66,16 +66,18 @@ class _PdfViewState extends State<PdfView> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            IconButton(
-              onPressed: () {
-                final page = indexPage == 0 ? pages : indexPage - 1;
-                controller.setPage(page);
-              },
-              icon: Icon(
-                Icons.arrow_back_ios_new_outlined,
-                color: Colors.white,
-              ),
-            ),
+            (pages >= 2)
+                ? IconButton(
+                    onPressed: () {
+                      final page = indexPage == 0 ? pages : indexPage - 1;
+                      controller.setPage(page);
+                    },
+                    icon: Icon(
+                      Icons.arrow_back_ios_new_outlined,
+                      color: Colors.white,
+                    ),
+                  )
+                : SizedBox(),
             (pages >= 2)
                 ? Text(
                     text,
@@ -84,16 +86,18 @@ class _PdfViewState extends State<PdfView> {
                     ),
                   )
                 : SizedBox(),
-            IconButton(
-              onPressed: () {
-                final page = indexPage == pages - 1 ? 0 : indexPage + 1;
-                controller.setPage(page);
-              },
-              icon: Icon(
-                Icons.arrow_forward_ios_outlined,
-                color: Colors.white,
-              ),
-            ),
+            (pages >= 2)
+                ? IconButton(
+                    onPressed: () {
+                      final page = indexPage == pages - 1 ? 0 : indexPage + 1;
+                      controller.setPage(page);
+                    },
+                    icon: Icon(
+                      Icons.arrow_forward_ios_outlined,
+                      color: Colors.white,
+                    ),
+                  )
+                : SizedBox(),
           ],
         ),
       ),
