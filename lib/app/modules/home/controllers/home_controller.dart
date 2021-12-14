@@ -1,20 +1,25 @@
+import 'dart:io';
+
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 
 class HomeController extends GetxController {
-  //TODO: Implement HomeController
+  Future<File> loadNetwork(String url) async {
+    Uri uri = Uri.parse(url);
+    final response = await http.get(uri);
+    final bytes = response.bodyBytes;
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+    return _storeFile(url, bytes);
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
+  Future<File> _storeFile(String url, List<int> bytes) async {
+    final filename = basename(url);
+    final dir = await getApplicationDocumentsDirectory();
 
-  @override
-  void onClose() {}
-  void increment() => count.value++;
+    final file = File('${dir.path}/$filename');
+    await file.writeAsBytes(bytes, flush: true);
+    return file;
+  }
 }
