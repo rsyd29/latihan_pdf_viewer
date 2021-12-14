@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
@@ -13,6 +14,16 @@ class HomeController extends GetxController {
     final bytes = response.bodyBytes;
 
     return _storeFile(url, bytes);
+  }
+
+  Future<File?> pickFile() async {
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['pdf'],
+    );
+
+    if (result == null) return null;
+    return File(result.paths.first!);
   }
 
   Future<File> _storeFile(String url, List<int> bytes) async {

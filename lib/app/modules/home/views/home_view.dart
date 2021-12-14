@@ -24,7 +24,11 @@ class HomeView extends GetView<HomeController> {
               child: Text('Asset PDF'),
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () async {
+                final file = await controller.pickFile();
+                if (file == null) return;
+                openPDF(context, file);
+              },
               child: Text('File PDF'),
             ),
             ElevatedButton(
