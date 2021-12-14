@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 class HomeController extends GetxController {
   Future<File> loadNetwork(String url) async {
@@ -21,5 +22,11 @@ class HomeController extends GetxController {
     final file = File('${dir.path}/$filename');
     await file.writeAsBytes(bytes, flush: true);
     return file;
+  }
+
+  Future<void> shareFile({required String path}) async {
+    await Share.shareFiles(
+      [path],
+    );
   }
 }

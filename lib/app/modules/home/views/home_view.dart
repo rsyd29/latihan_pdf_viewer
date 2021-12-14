@@ -30,7 +30,7 @@ class HomeView extends GetView<HomeController> {
             ElevatedButton(
               onPressed: () async {
                 final url =
-                    'https://library.uns.ac.id/wp-content/uploads/2016/04/EBOOK.pdf';
+                    'https://www.tutorialspoint.com/flutter/flutter_tutorial.pdf';
                 final file = await controller.loadNetwork(url);
                 openPDF(context, file);
               },
